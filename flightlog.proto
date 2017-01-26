@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package rpc;
+
+import "rr.proto";
+
+message Location{
+    float latitude = 1 ;
+    float longitude = 2 ;
+    float altitude = 3 ;
+}
+
+message GPS {
+    enum Status{
+        UNKNOWN = 0 ;
+        VALID = 1 ;
+        INVALID = 2 ;
+    }
+    Status status = 1 ;
+    int32 star_num = 2 ;
+    Location current = 3 ;
+    Location home = 4 ;
+}
+
+message Attitude{
+    float pitch = 1 ;
+    float roll = 2 ;
+    float yaw = 3 ;
+}
+
+message Compass {
+    enum Status{
+        UNKNOWN = 0 ;
+        VALID = 1 ;
+        INVALID = 2 ;
+    }
+    Status status = 1 ;
+    Attitude attitude = 2 ;
+}
+
+message Barometre {
+    enum Status{
+        UNKNOWN = 0 ;
+        VALID = 1 ;
+        INVALID = 2 ;
+    }
+    Status status = 1 ;
+    float pressure = 2 ;
+    float temperature = 3 ;
+    float altitude = 4 ;
+}
+
+message Sensors {
+    GPS gps = 1 ;
+    Compass compass = 2 ;
+    Barometre baro = 3 ;
+    float calc_alt = 4 ;
+}
+
+message Channels{
+    int32 ch1 = 1 ;
+    int32 ch2 = 2 ;
+    int32 ch3 = 3 ;
+    int32 ch4 = 4 ;
+    int32 ch5 = 5 ;
+    int32 ch6 = 6 ;
+    int32 ch7 = 7 ;
+    int32 ch8 = 8 ;
+}
+
+message ChanStatus{
+    Channels chan_input = 1 ;
+    Channels chan_output = 2 ;
+    Channels loiter_pwm = 3 ;
+}
+
+message Distance{
+    float to_target = 1 ;
+    float from_home = 2 ;
+}
+
+message FlightLog{
+    Sensors sensors = 1 ;
+    ChanStatus chan_status = 2 ;
+    Distance dis = 3 ;
+    string mode = 4 ;
+    int32 gear = 5 ;
+}
+
+service FlightLogService{
+    rpc Send (FlightLog) returns (Resp) {};
+    rpc Receive (Req) returns (FlightLog) {};
+}

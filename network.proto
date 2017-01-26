@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package rpc;
+
+import "rr.proto";
+
+message Network{
+    string mode = 1 ;
+    bool available = 2 ;
+    string submode = 3 ;
+    int32 delay = 4 ;
+}
+
+service NetworkService{
+    rpc Monitor (Req) returns (stream Network) {};
+}

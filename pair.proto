@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package rpc;
+
+import "rr.proto";
+
+message Guid{
+    string guid = 1;
+}
+
+service PairService{
+    rpc Pair (Guid) returns (Resp) {};
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package rpc;
+
+import "meta.proto"; 
+import "flightlog.proto";
+import "command.proto";
+
+message PacketLog{
+    Header hd = 1 ;
+    FlightLog log = 2 ;
+}
+
+message PacketCmd{
+    Header hd = 1 ;
+    Command cmd = 2 ;
+}

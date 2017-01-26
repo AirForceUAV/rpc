@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package rpc;
+
+import "rr.proto";
+
+message Command{
+    string cmd = 1 ;
+}
+
+service CommandService{
+    rpc Send (Command) returns (Resp) {};
+    rpc Receive (Req) returns (Command) {};
+}

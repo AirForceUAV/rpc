@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package rpc;
+
+message Req{
+    enum Code{
+        ASK = 0 ;
+    }
+    Code code = 1 ;
+}
+
+message Resp{
+    enum Code{
+        SUCESS = 0 ;
+        FAILED = 1 ;
+    }
+    Code code = 1 ;
+    string msg = 2 ;
+}
