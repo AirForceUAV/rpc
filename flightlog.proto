@@ -1,89 +1,152 @@
+//语法版本
 syntax = "proto3";
 
+//包名
 package rpc;
 
+//包含的其他proto声明
 import "rr.proto";
 
+//位置信息，来自GPS
 message Location{
+    //纬度
     float latitude = 1 ;
+    //经度
     float longitude = 2 ;
+    //高度
     float altitude = 3 ;
 }
 
+//GPS信息
 message GPS {
+    //状态枚举
     enum Status{
+        //未知
         UNKNOWN = 0 ;
+        //有效
         VALID = 1 ;
+        //无效
         INVALID = 2 ;
     }
+    //GPS当前状态
     Status status = 1 ;
+    //所搜星数
     int32 star_num = 2 ;
+    //飞机当前的位置
     Location current = 3 ;
+    //起飞的初试位置
     Location home = 4 ;
 }
 
+//姿态信息，来自罗盘
 message Attitude{
+    //俯仰
     float pitch = 1 ;
+    //倾斜
     float roll = 2 ;
+    //旋转
     float yaw = 3 ;
 }
 
+//罗盘信息
 message Compass {
+    //状态枚举
     enum Status{
+        //未知
         UNKNOWN = 0 ;
+        //有效
         VALID = 1 ;
+        //无效
         INVALID = 2 ;
     }
+    //罗盘当前状态
     Status status = 1 ;
+    //飞机当前姿态
     Attitude attitude = 2 ;
 }
 
+//气压计
 message Barometre {
+    //状态枚举
     enum Status{
+        //未知
         UNKNOWN = 0 ;
+        //有效
         VALID = 1 ;
+        //无效
         INVALID = 2 ;
     }
+    //气压计当前状态
     Status status = 1 ;
+    //当前气压
     float pressure = 2 ;
+    //当前温度
     float temperature = 3 ;
+    //当前高度
     float altitude = 4 ;
 }
 
+//传感器信息
 message Sensors {
+    //GPS信息
     GPS gps = 1 ;
+    //罗盘信息
     Compass compass = 2 ;
+    //气压计信息
     Barometre baro = 3 ;
+    //根据GPS和气压计计算矫正后的真实高度
     float calc_alt = 4 ;
 }
 
+//通道信息
 message Channels{
+    //副翼
     int32 ch1 = 1 ;
+    //升降舵
     int32 ch2 = 2 ;
+    //油门
     int32 ch3 = 3 ;
+    //方向舵
     int32 ch4 = 4 ;
+    //飞行模式
     int32 ch5 = 5 ;
+    //总距
     int32 ch6 = 6 ;
+    //自定义功能
     int32 ch7 = 7 ;
+    //自定义功能
     int32 ch8 = 8 ;
 }
 
+//通道状态
 message ChanStatus{
+    //通道输入
     Channels chan_input = 1 ;
+    //通道输出
     Channels chan_output = 2 ;
+    //悬停PWM
     Channels loiter_pwm = 3 ;
 }
 
+//距离信息
 message Distance{
+    //距离目标点距离
     float to_target = 1 ;
+    //距离起飞位置距离
     float from_home = 2 ;
 }
 
+//飞行日志
 message FlightLog{
+    //传感器信息
     Sensors sensors = 1 ;
+    //通道状态
     ChanStatus chan_status = 2 ;
+    //距离信息
     Distance dis = 3 ;
+    //当前模式
     string mode = 4 ;
+    //速度档位
     int32 gear = 5 ;
 }
 
